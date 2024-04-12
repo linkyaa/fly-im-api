@@ -1,0 +1,6 @@
+syntax = "proto3";
+option go_package = "github.com/linkyaa/fly-im-api/proto/im/v1;impb";
+
+message Heartbeat {}
+
+message SyncTime{}
