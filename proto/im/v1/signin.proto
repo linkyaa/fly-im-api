@@ -1,0 +1,27 @@
+syntax = "proto3";
+
+option go_package = "github.com/linkyaa/fly-im-api/proto/im/v1;impb";
+
+import "proto/im/v1/conn.proto";
+
+//登录消息
+message SignIn {
+  DeviceType deviceType = 1;  //设备类型
+  int64 userId = 2;           //用户ID
+  int64 deviceId = 3;         //设备ID
+  bytes signature = 4;        //登录签名
+  int32 sdkVersion = 5;       //sdk版本, 版本不兼容时,客户端需要升级,否则消息无法处理
+}
+
+enum SignInCode {
+  success = 0;    //登录成功
+  ban = 1;        //黑名单
+  tokenExpired = 2; //token过期
+  tokenInvalid = 3; //token非法
+}
+
+//登录响应
+message SignInAck {
+  SignInCode code = 1;
+}
+

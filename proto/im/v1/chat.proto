@@ -1,0 +1,10 @@
+syntax = "proto3";
+
+option go_package = "github.com/linkyaa/fly-im-api/proto/im/v1;impb";
+
+message Chat {
+  int64 channelId = 1;  //频道ID,群聊代表群ID,私聊表示toUserId
+  bytes requestId = 2;  //请求ID
+  bytes content = 3;    //聊天内容
+}
+

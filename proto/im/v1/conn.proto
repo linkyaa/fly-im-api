@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+option go_package = "github.com/linkyaa/fly-im-api/proto/im/v1;impb";
+
+enum MessageType {
+  auth = 0;
+  chat = 1;
+  heartbeat = 2;
+  syncTime = 3;
+}
+
+enum DeviceType {
+  app = 0; //ios,android 移动端
+  web = 1; //网页端
+  pc = 2;  //windows,macOs,linux 桌面端
+  system = 3; //一般是系统的通知消息
+}
+
+message ClientMessage {
+  MessageType type = 1;
+  bytes message = 2;
+}
