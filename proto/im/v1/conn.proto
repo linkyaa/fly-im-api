@@ -2,6 +2,17 @@ syntax = "proto3";
 
 option go_package = "github.com/linkyaa/fly-im-api/proto/im/v1;impb";
 
+//频道类型
+enum ChannelType {
+  personal = 0;       //个人
+  workRoom = 1;       //普通群/好友群：由群内成员邀请,无需审批和同意，有群人数限制(300-500)，才能加入(一般用于亲朋好友,类似微信群)
+  communityRoom = 2;  //社交群：可以通过搜索等，可以发起加群申请，管理员同意后才能加入(类似QQ群), 一般用于社交.
+  meetingRoom = 3;    //陌生人会议群：创建后可以随意进出的群，不需要申请，有人数限制(300-1000)，支持历史消息存储
+  liveChatRoom = 4;   //直播群：创建后可以随意进出的群，不需要申请，没有人数限制，但是不支持历史消息存储,不对消息进可靠保证
+  largeRoom = 5;      //万人大群：可以随意进出, 有一定限制的群(优先级，并发数等,没想好), 可以支持历史消息存储, 但是不支持查看入群前的历史消息.
+}
+
+//消息类型
 enum MessageType {
   auth = 0;
   chat = 1;
@@ -9,6 +20,16 @@ enum MessageType {
   syncTime = 3;
 }
 
+//响应码:对上行消息的状态响应
+enum ResponseCode {
+  ok = 0;    //成功
+  blackList = 1;   //黑名单：群聊黑名单,私聊拉黑
+  gag = 2;   //禁言: 群聊禁言
+  badMessage = 3;  //非法消息,客户端要丢弃这个消息
+  RateLimit = 4;   //触发限流,可以考虑丢弃消息, 暂时想法是从服务器角度考虑的限流
+}
+
+//设备类型
 enum DeviceType {
   app = 0; //ios,android 移动端
   web = 1; //网页端
@@ -16,6 +37,7 @@ enum DeviceType {
   system = 3; //一般是系统的通知消息
 }
 
+//上行消息
 message ClientMessage {
   MessageType type = 1;
   bytes message = 2;

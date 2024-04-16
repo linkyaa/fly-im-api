@@ -15,9 +15,9 @@ message SignIn {
 
 enum SignInCode {
   success = 0;    //登录成功
-  ban = 1;        //黑名单
-  tokenExpired = 2; //token过期
-  tokenInvalid = 3; //token非法
+  tokenExpired = 1; //token过期
+  tokenInvalid = 2; //token非法
+  updateVersion = 3;//客户端需要升级,版本不兼容了
 }
 
 //登录响应
