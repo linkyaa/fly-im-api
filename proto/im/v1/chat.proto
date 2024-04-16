@@ -2,9 +2,18 @@ syntax = "proto3";
 
 option go_package = "github.com/linkyaa/fly-im-api/proto/im/v1;impb";
 
+import "proto/im/v1/conn.proto";
+
+//上行聊天消息
 message Chat {
-  int64 channelId = 1;  //频道ID,群聊代表群ID,私聊表示toUserId
-  bytes requestId = 2;  //请求ID
-  bytes content = 3;    //聊天内容
+  ChannelType type = 1; //频道类型
+  int64 channelId = 2;  //频道ID,群聊代表群ID,私聊表示toUserId
+  int64 senderId = 3;   //发送者Id
+  bytes requestId = 4;  //请求ID
+  bytes content = 5;    //聊天内容
 }
 
+//上行聊天消息的响应
+message ChatAck {
+  ResponseCode code = 1;
+}
