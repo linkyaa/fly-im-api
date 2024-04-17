@@ -13,12 +13,6 @@ message SignIn {
   int32 sdkVersion = 5;       //sdk版本, 版本不兼容时,客户端需要升级,否则消息无法处理
 }
 
-enum SignInCode {
-  success = 0;    //登录成功
-  tokenExpired = 1; //token过期
-  tokenInvalid = 2; //token非法
-  updateVersion = 3;//客户端需要升级,版本不兼容了
-}
 
 //登录响应
 message SignInAck {
