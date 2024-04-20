@@ -20,4 +20,5 @@ message ChatContent {
 //上行聊天消息的响应
 message ChatAck {
   ResponseCode code = 1;
+  int64 messageId = 2;
 }
