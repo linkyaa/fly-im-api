@@ -26,9 +26,7 @@ const _ = proto.GoGoProtoPackageIsVersion3 // please upgrade the proto package
 type Chat struct {
 	Type      ChannelType `protobuf:"varint,1,opt,name=type,proto3,enum=ChannelType" json:"type,omitempty"`
 	ChannelId int64       `protobuf:"varint,2,opt,name=channelId,proto3" json:"channelId,omitempty"`
-	SenderId  int64       `protobuf:"varint,3,opt,name=senderId,proto3" json:"senderId,omitempty"`
-	RequestId []byte      `protobuf:"bytes,4,opt,name=requestId,proto3" json:"requestId,omitempty"`
-	Content   []byte      `protobuf:"bytes,5,opt,name=content,proto3" json:"content,omitempty"`
+	Message   []byte      `protobuf:"bytes,4,opt,name=message,proto3" json:"message,omitempty"`
 }
 
 func (m *Chat) Reset()         { *m = Chat{} }
@@ -78,21 +76,60 @@ func (m *Chat) GetChannelId() int64 {
 	return 0
 }
 
-func (m *Chat) GetSenderId() int64 {
+func (m *Chat) GetMessage() []byte {
 	if m != nil {
-		return m.SenderId
-	}
-	return 0
-}
-
-func (m *Chat) GetRequestId() []byte {
-	if m != nil {
-		return m.RequestId
+		return m.Message
 	}
 	return nil
 }
 
-func (m *Chat) GetContent() []byte {
+// 聊天内容
+type ChatContent struct {
+	MessageId int64  `protobuf:"varint,1,opt,name=messageId,proto3" json:"messageId,omitempty"`
+	Content   []byte `protobuf:"bytes,2,opt,name=content,proto3" json:"content,omitempty"`
+}
+
+func (m *ChatContent) Reset()         { *m = ChatContent{} }
+func (m *ChatContent) String() string { return proto.CompactTextString(m) }
+func (*ChatContent) ProtoMessage()    {}
+func (*ChatContent) Descriptor() ([]byte, []int) {
+	return fileDescriptor_ea379b4c55e6d1b7, []int{1}
+}
+func (m *ChatContent) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *ChatContent) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_ChatContent.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *ChatContent) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ChatContent.Merge(m, src)
+}
+func (m *ChatContent) XXX_Size() int {
+	return m.Size()
+}
+func (m *ChatContent) XXX_DiscardUnknown() {
+	xxx_messageInfo_ChatContent.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_ChatContent proto.InternalMessageInfo
+
+func (m *ChatContent) GetMessageId() int64 {
+	if m != nil {
+		return m.MessageId
+	}
+	return 0
+}
+
+func (m *ChatContent) GetContent() []byte {
 	if m != nil {
 		return m.Content
 	}
@@ -108,7 +145,7 @@ func (m *ChatAck) Reset()         { *m = ChatAck{} }
 func (m *ChatAck) String() string { return proto.CompactTextString(m) }
 func (*ChatAck) ProtoMessage()    {}
 func (*ChatAck) Descriptor() ([]byte, []int) {
-	return fileDescriptor_ea379b4c55e6d1b7, []int{1}
+	return fileDescriptor_ea379b4c55e6d1b7, []int{2}
 }
 func (m *ChatAck) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -146,6 +183,7 @@ func (m *ChatAck) GetCode() ResponseCode {
 
 func init() {
 	proto.RegisterType((*Chat)(nil), "Chat")
+	proto.RegisterType((*ChatContent)(nil), "ChatContent")
 	proto.RegisterType((*ChatAck)(nil), "ChatAck")
 }
 
@@ -153,23 +191,23 @@ func init() { proto.RegisterFile("proto/im/v1/chat.proto", fileDescriptor_ea379b
 
 var fileDescriptor_ea379b4c55e6d1b7 = []byte{
 	// 268 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x54, 0xd0, 0xb1, 0x4e, 0xeb, 0x30,
-	0x14, 0xc6, 0xf1, 0xfa, 0x36, 0x97, 0x82, 0x55, 0x18, 0x32, 0x20, 0xab, 0x42, 0x56, 0xe8, 0x94,
-	0x81, 0xc6, 0x02, 0x46, 0x26, 0xc8, 0x42, 0xd6, 0x88, 0x89, 0xcd, 0xb1, 0x0f, 0xc4, 0x6a, 0x62,
-	0x9b, 0xc4, 0x45, 0xca, 0x5b, 0x30, 0xf3, 0x44, 0x8c, 0x1d, 0x19, 0x51, 0xf2, 0x22, 0xa8, 0xae,
-	0x4a, 0x61, 0x3c, 0xbf, 0xbf, 0x2c, 0x7d, 0x32, 0x3e, 0xb5, 0x8d, 0x71, 0x86, 0xa9, 0x9a, 0xbd,
-	0x5e, 0x32, 0x51, 0x72, 0x97, 0x78, 0x98, 0xfd, 0x75, 0xa3, 0xf5, 0xd6, 0xe7, 0xef, 0x08, 0x07,
-	0x69, 0xc9, 0x5d, 0x18, 0xe1, 0xc0, 0x75, 0x16, 0x08, 0x8a, 0x50, 0x7c, 0x72, 0x35, 0x4d, 0xd2,
-	0x92, 0x6b, 0x0d, 0xd5, 0x43, 0x67, 0x21, 0xf7, 0x25, 0x3c, 0xc3, 0x47, 0x62, 0x8b, 0x99, 0x24,
-	0xff, 0x22, 0x14, 0x8f, 0xf3, 0x3d, 0x84, 0x33, 0x7c, 0xd8, 0x82, 0x96, 0xd0, 0x64, 0x92, 0x8c,
-	0x7d, 0xfc, 0xb9, 0x37, 0x2f, 0x1b, 0x78, 0x59, 0x41, 0xeb, 0x32, 0x49, 0x82, 0x08, 0xc5, 0xd3,
-	0x7c, 0x0f, 0x21, 0xc1, 0x13, 0x61, 0xb4, 0x03, 0xed, 0xc8, 0x7f, 0xdf, 0x76, 0xe7, 0xfc, 0x02,
-	0x4f, 0x36, 0xdb, 0x6e, 0xc5, 0x32, 0x3c, 0xc7, 0x81, 0x30, 0x72, 0x37, 0xef, 0x38, 0xc9, 0xa1,
-	0xb5, 0x46, 0xb7, 0x90, 0x1a, 0x09, 0xb9, 0x4f, 0x77, 0xf7, 0x1f, 0x3d, 0x45, 0xeb, 0x9e, 0xa2,
-	0xaf, 0x9e, 0xa2, 0xb7, 0x81, 0x8e, 0xd6, 0x03, 0x1d, 0x7d, 0x0e, 0x74, 0xf4, 0x98, 0x3c, 0x2b,
-	0x57, 0xae, 0x8a, 0x44, 0x98, 0x9a, 0x55, 0x4a, 0x2f, 0x3b, 0xce, 0xd9, 0x53, 0xd5, 0x2d, 0x54,
-	0xbd, 0xe0, 0x56, 0xb1, 0x5f, 0x5f, 0x73, 0xa3, 0x6a, 0x5b, 0x14, 0x07, 0x5e, 0xae, 0xbf, 0x03,
-	0x00, 0x00, 0xff, 0xff, 0xfa, 0xe9, 0xdd, 0x4c, 0x4d, 0x01, 0x00, 0x00,
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x54, 0x90, 0x3f, 0x4b, 0xc4, 0x30,
+	0x1c, 0x86, 0x2f, 0x5e, 0xf1, 0x30, 0x56, 0x87, 0x0e, 0x52, 0x44, 0x42, 0xed, 0xd4, 0xc1, 0x4b,
+	0x50, 0x47, 0x27, 0x2d, 0x82, 0xb7, 0x06, 0x27, 0x27, 0xd3, 0x34, 0x5e, 0xc3, 0x35, 0x7f, 0xb0,
+	0x51, 0xe8, 0xb7, 0xf0, 0x63, 0x39, 0xde, 0xe8, 0x28, 0xed, 0x17, 0x91, 0xa6, 0x96, 0xd3, 0xf1,
+	0x7d, 0xde, 0xf0, 0x3e, 0xe1, 0x07, 0x4f, 0xec, 0xab, 0x71, 0x86, 0x48, 0x45, 0xde, 0x2f, 0x09,
+	0xaf, 0x98, 0xc3, 0x1e, 0x9c, 0xfe, 0xe7, 0x46, 0xeb, 0x91, 0xa7, 0xcf, 0x30, 0xc8, 0x2b, 0xe6,
+	0xa2, 0x04, 0x06, 0xae, 0xb5, 0x22, 0x06, 0x09, 0xc8, 0x8e, 0xaf, 0x42, 0x9c, 0x57, 0x4c, 0x6b,
+	0x51, 0x3f, 0xb6, 0x56, 0x50, 0xdf, 0x44, 0x67, 0xf0, 0x80, 0x8f, 0x70, 0x55, 0xc6, 0x7b, 0x09,
+	0xc8, 0xe6, 0x74, 0x07, 0xa2, 0x18, 0x2e, 0x94, 0x68, 0x1a, 0xb6, 0x16, 0x71, 0x90, 0x80, 0x2c,
+	0xa4, 0x53, 0x4c, 0xef, 0xe1, 0xe1, 0x60, 0xc8, 0x8d, 0x76, 0x42, 0xbb, 0x61, 0xe6, 0xb7, 0x59,
+	0x95, 0xde, 0x36, 0xa7, 0x3b, 0x30, 0xcc, 0xf0, 0xf1, 0xa1, 0x57, 0x84, 0x74, 0x8a, 0xe9, 0x05,
+	0x5c, 0x0c, 0x33, 0xb7, 0x7c, 0x13, 0x9d, 0xc3, 0x80, 0x9b, 0x72, 0xfa, 0xeb, 0x11, 0xa6, 0xa2,
+	0xb1, 0x46, 0x37, 0x22, 0x37, 0xa5, 0xa0, 0xbe, 0xba, 0x7b, 0xf8, 0xec, 0x10, 0xd8, 0x76, 0x08,
+	0x7c, 0x77, 0x08, 0x7c, 0xf4, 0x68, 0xb6, 0xed, 0xd1, 0xec, 0xab, 0x47, 0xb3, 0x27, 0xbc, 0x96,
+	0xae, 0x7a, 0x2b, 0x30, 0x37, 0x8a, 0xd4, 0x52, 0x6f, 0x5a, 0xc6, 0xc8, 0x4b, 0xdd, 0x2e, 0xa5,
+	0x5a, 0x32, 0x2b, 0xc9, 0x9f, 0x33, 0xdd, 0x48, 0x65, 0x8b, 0x62, 0xdf, 0x93, 0xeb, 0x9f, 0x00,
+	0x00, 0x00, 0xff, 0xff, 0xa5, 0x9e, 0x4b, 0xca, 0x59, 0x01, 0x00, 0x00,
 }
 
 func (m *Chat) Marshal() (dAtA []byte, err error) {
@@ -192,24 +230,12 @@ func (m *Chat) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if len(m.Content) > 0 {
-		i -= len(m.Content)
-		copy(dAtA[i:], m.Content)
-		i = encodeVarintChat(dAtA, i, uint64(len(m.Content)))
-		i--
-		dAtA[i] = 0x2a
-	}
-	if len(m.RequestId) > 0 {
-		i -= len(m.RequestId)
-		copy(dAtA[i:], m.RequestId)
-		i = encodeVarintChat(dAtA, i, uint64(len(m.RequestId)))
+	if len(m.Message) > 0 {
+		i -= len(m.Message)
+		copy(dAtA[i:], m.Message)
+		i = encodeVarintChat(dAtA, i, uint64(len(m.Message)))
 		i--
 		dAtA[i] = 0x22
-	}
-	if m.SenderId != 0 {
-		i = encodeVarintChat(dAtA, i, uint64(m.SenderId))
-		i--
-		dAtA[i] = 0x18
 	}
 	if m.ChannelId != 0 {
 		i = encodeVarintChat(dAtA, i, uint64(m.ChannelId))
@@ -218,6 +244,41 @@ func (m *Chat) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	}
 	if m.Type != 0 {
 		i = encodeVarintChat(dAtA, i, uint64(m.Type))
+		i--
+		dAtA[i] = 0x8
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *ChatContent) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *ChatContent) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *ChatContent) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if len(m.Content) > 0 {
+		i -= len(m.Content)
+		copy(dAtA[i:], m.Content)
+		i = encodeVarintChat(dAtA, i, uint64(len(m.Content)))
+		i--
+		dAtA[i] = 0x12
+	}
+	if m.MessageId != 0 {
+		i = encodeVarintChat(dAtA, i, uint64(m.MessageId))
 		i--
 		dAtA[i] = 0x8
 	}
@@ -275,12 +336,21 @@ func (m *Chat) Size() (n int) {
 	if m.ChannelId != 0 {
 		n += 1 + sovChat(uint64(m.ChannelId))
 	}
-	if m.SenderId != 0 {
-		n += 1 + sovChat(uint64(m.SenderId))
-	}
-	l = len(m.RequestId)
+	l = len(m.Message)
 	if l > 0 {
 		n += 1 + l + sovChat(uint64(l))
+	}
+	return n
+}
+
+func (m *ChatContent) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.MessageId != 0 {
+		n += 1 + sovChat(uint64(m.MessageId))
 	}
 	l = len(m.Content)
 	if l > 0 {
@@ -382,30 +452,10 @@ func (m *Chat) UnmarshalWithFieldNum(dAtA []byte, targetFileNum int) error {
 					break
 				}
 			}
-		case 3:
-			targetFileNum--
-			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field SenderId", wireType)
-			}
-			m.SenderId = 0
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowChat
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				m.SenderId |= int64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
 		case 4:
 			targetFileNum--
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field RequestId", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field Message", wireType)
 			}
 			var byteLen int
 			for shift := uint(0); ; shift += 7 {
@@ -432,12 +482,88 @@ func (m *Chat) UnmarshalWithFieldNum(dAtA []byte, targetFileNum int) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.RequestId = append(m.RequestId[:0], dAtA[iNdEx:postIndex]...)
-			if m.RequestId == nil {
-				m.RequestId = []byte{}
+			m.Message = append(m.Message[:0], dAtA[iNdEx:postIndex]...)
+			if m.Message == nil {
+				m.Message = []byte{}
 			}
 			iNdEx = postIndex
-		case 5:
+		default:
+			iNdEx = preIndex
+			skippy, err := skipChat(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthChat
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+
+// Deserialize a specified number of fields, return early as soon as the specified fields are deserialized.
+// 反序列化指定数量的字段,达到指定的次数就返回. 参数 targetFileNum <=0 直接返回,不进行反序列化
+func (m *ChatContent) UnmarshalWithFieldNum(dAtA []byte, targetFileNum int) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowChat
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: ChatContent: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: ChatContent: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		if targetFileNum <= 0 {
+			return nil
+		}
+		switch fieldNum {
+		case 1:
+			targetFileNum--
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field MessageId", wireType)
+			}
+			m.MessageId = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowChat
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.MessageId |= int64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 2:
 			targetFileNum--
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Content", wireType)
@@ -578,10 +704,18 @@ func (m *Chat) Cleanup() {
 	}
 	m.Type = 0
 	m.ChannelId = 0
-	m.SenderId = 0
-	if m.RequestId != nil {
-		m.RequestId = m.RequestId[:0]
+	if m.Message != nil {
+		m.Message = m.Message[:0]
 	}
+}
+
+// Cleanup Clean up the fields of the message.
+// 清理消息的字段，该方法在消息被释放时被调用，不对切片中的字段进行处理。
+func (m *ChatContent) Cleanup() {
+	if m == nil {
+		return
+	}
+	m.MessageId = 0
 	if m.Content != nil {
 		m.Content = m.Content[:0]
 	}
@@ -604,10 +738,18 @@ func (m *Chat) DeepCleanup() {
 	}
 	m.Type = 0
 	m.ChannelId = 0
-	m.SenderId = 0
-	if m.RequestId != nil {
-		m.RequestId = m.RequestId[:0]
+	if m.Message != nil {
+		m.Message = m.Message[:0]
 	}
+}
+
+// DeepCleanup Clean up the fields of the message.
+// 清理消息的字段，该方法在消息被释放时被调用，递归处理切片中的字段。
+func (m *ChatContent) DeepCleanup() {
+	if m == nil {
+		return
+	}
+	m.MessageId = 0
 	if m.Content != nil {
 		m.Content = m.Content[:0]
 	}
@@ -688,28 +830,9 @@ func (m *Chat) Unmarshal(dAtA []byte) error {
 					break
 				}
 			}
-		case 3:
-			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field SenderId", wireType)
-			}
-			m.SenderId = 0
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowChat
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				m.SenderId |= int64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
 		case 4:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field RequestId", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field Message", wireType)
 			}
 			var byteLen int
 			for shift := uint(0); ; shift += 7 {
@@ -736,12 +859,81 @@ func (m *Chat) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.RequestId = append(m.RequestId[:0], dAtA[iNdEx:postIndex]...)
-			if m.RequestId == nil {
-				m.RequestId = []byte{}
+			m.Message = append(m.Message[:0], dAtA[iNdEx:postIndex]...)
+			if m.Message == nil {
+				m.Message = []byte{}
 			}
 			iNdEx = postIndex
-		case 5:
+		default:
+			iNdEx = preIndex
+			skippy, err := skipChat(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthChat
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *ChatContent) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowChat
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: ChatContent: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: ChatContent: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field MessageId", wireType)
+			}
+			m.MessageId = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowChat
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.MessageId |= int64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 2:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Content", wireType)
 			}

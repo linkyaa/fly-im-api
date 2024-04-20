@@ -8,9 +8,13 @@ import "proto/im/v1/conn.proto";
 message Chat {
   ChannelType type = 1; //频道类型
   int64 channelId = 2;  //频道ID,群聊代表群ID,私聊表示toUserId
-  int64 senderId = 3;   //发送者Id
-  bytes requestId = 4;  //请求ID
-  bytes content = 5;    //聊天内容
+  bytes message = 4;    //聊天内容
+}
+
+//聊天内容
+message ChatContent {
+  int64 messageId = 1; //消息ID
+  bytes content = 2;   //消息内容
 }
 
 //上行聊天消息的响应
