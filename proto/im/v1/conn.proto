@@ -33,10 +33,10 @@ enum ResponseCode {
   blackList = 1;   //黑名单：群聊黑名单,私聊拉黑
   gag = 2;   //禁言: 群聊禁言
   badMessage = 3;  //非法消息,客户端要丢弃这个消息
-  RateLimit = 4;   //触发限流,可以考虑丢弃消息, 暂时想法是从服务器角度考虑的限流
-  NotMember = 5;//不是成员
-  ChannelNotExist = 6;//频道不存在
-  ChannelBan = 7; //频道被封禁
+  rateLimit = 4;   //触发限流,可以考虑丢弃消息, 暂时想法是从服务器角度考虑的限流
+  notMember = 5;//不是成员
+  channelNotExist = 6;//频道不存在
+  channelBan = 7; //频道被封禁
 }
 
 //设备类型

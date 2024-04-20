@@ -8,13 +8,19 @@ import "proto/im/v1/conn.proto";
 message Chat {
   ChannelType type = 1; //频道类型
   int64 channelId = 2;  //频道ID,群聊代表群ID,私聊表示toUserId
+  int64 messageId = 3;  //
   bytes message = 4;    //聊天内容
 }
 
-//聊天内容
-message ChatContent {
-  int64 messageId = 1; //消息ID
-  bytes content = 2;   //消息内容
+//服务端消息
+message ServerMessage {
+  ChannelType type = 1; //频道类型
+  int64 channelId = 2;  //频道ID
+  int64 sequenceId = 3; //消息序列号
+  int64 senderId = 4;   //发送者
+  DeviceType senderDevice = 5;//发送方设备
+  bytes content = 6;    //消息内容
+  int64 messageId = 7;  //消息ID,频道内唯一.
 }
 
 //上行聊天消息的响应
